@@ -1,5 +1,9 @@
 from random import randint
-
+def retornalista(posicaomenor, pesoinicial):
+    pesomenorlista=[]
+    pesomenorlista.append(posicaomenor)
+    pesomenorlista.append(pesoinicial)
+    return pesomenorlista         
 def encontramenorpeso(A):
     pesoinicial=A[0][2]
     posicao=0
@@ -7,19 +11,34 @@ def encontramenorpeso(A):
     for i in A:
        if(i[2]<pesoinicial):
          pesoinicial=i[2]
-         posicaomenorpeso=posicao  
+         posicaomenorpeso=posicao
+       else:
+         if(i[2]==pesoinicial and i[1]>A[posicaomenorpeso][1]):
+           pesoinicial=i[2]
+           posicaomenorpeso=posicao     
        posicao=posicao+1
-    pesomenorlista=[]
-    pesomenorlista.append(posicaomenorpeso)
-    pesomenorlista.append(pesoinicial)
-    return pesomenorlista
-              
+    return retornalista(posicaomenorpeso,pesoinicial)
+def encontramaiorvalor(A):
+    posicao=0
+    valorinicial=0    
+    posicaomaiorvalor=0  
+    for i in A:
+       if(i[1]>valorinicial):
+         valorinicial=i[1]
+         posicaomaiorvalor=posicao
+       else:
+         if(i[1]==valorinicial and i[2]<A[posicaomenorpeso][2]):
+           valorinicial=i[1]
+           posicaomaiorvalor=posicao     
+       posicao=posicao+1
+    return retornalista(posicaomaiorvalor,valorinicial)          
 def eliminaelemento(A,i):
     b=[]
     for i2 in A:
      if(i2!=A[i]):
        b.append(i2)           
-    return b                                                                                 
+    return b    
+                                                                             
 a=input("Digite a quantidade de elementos")
 A=[]
 colunas=int(a)
@@ -40,10 +59,10 @@ for i in range(colunas+1):
         if(i==0 or i2==0):
           matrizvaltot[i][i2]=0
         else: 
-          pesomenorlista=encontramenorpeso(A)
+          pesomenorlista=encontramenorpeso(A) 
           if(i2==pesomenorlista[1]):
             matrizvaltot[i][i2]=A[pesomenorlista[0]][1] 
           else:
-            matrizdepesonovo=eliminaelemento(A,pesomenorlista[0])
+            matrizdepesonovo=eliminaelemento(A,pesomenorlista[0])    
 print(matrizdepesonovo)            
 print(matrizvaltot)   
