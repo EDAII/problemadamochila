@@ -7,13 +7,19 @@ def encontramenorpeso(A):
     for i in A:
        if(i[2]<pesoinicial):
          pesoinicial=i[2]
-         posicaomenorpeso=posicao
+         posicaomenorpeso=posicao  
        posicao=posicao+1
     pesomenorlista=[]
     pesomenorlista.append(posicaomenorpeso)
     pesomenorlista.append(pesoinicial)
-    return pesomenorlista              
-                                                                                     
+    return pesomenorlista
+              
+def eliminaelemento(A,i):
+    b=[]
+    for i2 in A:
+     if(i2!=A[i]):
+       b.append(i2)           
+    return b                                                                                 
 a=input("Digite a quantidade de elementos")
 A=[]
 colunas=int(a)
@@ -36,5 +42,8 @@ for i in range(colunas+1):
         else: 
           pesomenorlista=encontramenorpeso(A)
           if(i2==pesomenorlista[1]):
-            matrizvaltot[i][i2]=A[pesomenorlista[0]][1]         
+            matrizvaltot[i][i2]=A[pesomenorlista[0]][1] 
+          else:
+            matrizdepesonovo=eliminaelemento(A,pesomenorlista[0])
+print(matrizdepesonovo)            
 print(matrizvaltot)   
