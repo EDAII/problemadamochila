@@ -37,7 +37,15 @@ def eliminaelemento(A,i):
     for i2 in A:
      if(i2!=A[i]):
        b.append(i2)           
-    return b    
+    return b 
+def selecionatamanho( A,i2):
+    b=[]
+    posicao=0  
+    for Aele in A:
+      if(posicao<=i2):
+        b.append(Aele)
+      posicao=posicao+1
+    return b              
 def main():                                                                             
     a=input("Digite a quantidade de elementos")
     A=[]
@@ -53,15 +61,20 @@ def main():
       A[i][2]=peso 
     print(A) 
     matrizvaltot=[]
+    matrizresultado=[] 
     for i in range(colunas+1):
       matrizvaltot.append([0]*(d+1))  
-      pesomenorlista=[]  
+      pesomenorlista=[]
+      matrizresultado=selecionatamanho(A,i)
+      print(matrizresultado)
       for i2 in range(d+1):
           if(i==0 or i2==0):
             matrizvaltot[i][i2]=0
+          if(len(pesomenorlista)==0):
+               pesomenorlista.append(encontramenorpeso(matrizresultado))   
+          if(pesomenorlista[0][1]<=i2 and i==1):
+             matrizvaltot[i][i2]=matrizvaltot[i][i2]=A[pesomenorlista[0][0]][1]     
           else: 
-            if(len(pesomenorlista)==0):
-               pesomenorlista.append(encontramenorpeso(A)) 
             if(i2==pesomenorlista[0][1]):
               matrizvaltot[i][i2]=A[pesomenorlista[0][0]][1] 
             elif(i2>pesomenorlista[0][1]):
