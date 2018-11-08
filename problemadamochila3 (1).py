@@ -38,31 +38,41 @@ def eliminaelemento(A,i):
      if(i2!=A[i]):
        b.append(i2)           
     return b    
-                                                                             
-a=input("Digite a quantidade de elementos")
-A=[]
-colunas=int(a)
-c=input("Digite a capacidade da mochila")
-d=int(c)      
-for i in range(colunas):
-   valor=randint(1,100)
-   peso=randint(1,d)  
-   A.append([0]*3)
-   A[i][0]=i+1
-   A[i][1]=valor
-   A[i][2]=peso 
-print(A) 
-matrizvaltot=[]
-for i in range(colunas+1):
-    matrizvaltot.append([0]*(d+1))  
-    for i2 in range(d+1):
-        if(i==0 or i2==0):
-          matrizvaltot[i][i2]=0
-        else: 
-          pesomenorlista=encontramenorpeso(A) 
-          if(i2==pesomenorlista[1]):
-            matrizvaltot[i][i2]=A[pesomenorlista[0]][1] 
-          else:
-            matrizdepesonovo=eliminaelemento(A,pesomenorlista[0])    
-print(matrizdepesonovo)            
-print(matrizvaltot)   
+def main():                                                                             
+    a=input("Digite a quantidade de elementos")
+    A=[]
+    colunas=int(a)
+    c=input("Digite a capacidade da mochila")
+    d=int(c)      
+    for i in range(colunas):
+      valor=randint(1,100)
+      peso=randint(1,d)  
+      A.append([0]*3)
+      A[i][0]=i+1
+      A[i][1]=valor
+      A[i][2]=peso 
+    print(A) 
+    matrizvaltot=[]
+    for i in range(colunas+1):
+      matrizvaltot.append([0]*(d+1))  
+      pesomenorlista=[]  
+      for i2 in range(d+1):
+          if(i==0 or i2==0):
+            matrizvaltot[i][i2]=0
+          else: 
+            if(len(pesomenorlista)==0):
+               pesomenorlista.append(encontramenorpeso(A)) 
+            if(i2==pesomenorlista[0][1]):
+              matrizvaltot[i][i2]=A[pesomenorlista[0][0]][1] 
+            elif(i2>pesomenorlista[0][1]):
+              matrizrestante=eliminaelemento(A,pesomenorlista[0][0]) 
+              pesomenorlista.append(encontramenorpeso(matrizrestante))
+              print(pesomenorlista[1][0]) 
+              if(i2==pesomenorlista[1][1]):
+                 if(A[pesomenorlista[0][0]][1]>A[pesomenorlista[1][0]][1]):
+                  matrizvaltot[i][i2]=A[pesomenorlista[0][0]][1]
+                 else:
+                  matrizvaltot[i][i2]=A[pesomenorlista[1][0]][1]
+                            
+    print(matrizvaltot)   
+main()
