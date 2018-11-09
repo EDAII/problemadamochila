@@ -58,7 +58,7 @@ def retornamaior(pesomenor,A):
       result.append(i2-A[i2][2])
    return result          
 def setacampovalor(pesomenorlista, i2,i,matrizvaltot,matrizresultado,valor,elemento,valor4):
-          valalor=0
+          valor=0
           i3=pesomenorlista[0][0]     
           ianterior=i-1 
           pesomenor=[]   
@@ -90,14 +90,10 @@ def setacampovalor(pesomenorlista, i2,i,matrizvaltot,matrizresultado,valor,eleme
                  matrizresultado=eliminaelemento(matrizresultado,elemento)   
                  valor2=setacampovalor(pesomenorlista, i2,i,matrizvaltot,matrizresultado,0,elemento,valor4)   
                  valor=valor+valor3+valor2  
-                 print(" este é o valor do setacampo :", valor2)  
-                 if(matrizvaltot[ianterior][1]>valor):
-                  valor=matrizvaltot[i-1][1]
-                  i2=0                     
-            else:
-                if(matrizvaltot[ianterior][1]>valor):
-                  valor=matrizvaltot[ianterior][1]
-                  i2=0           
+                 print(" este é o valor do setacampo :", valor2)                      
+          if(matrizvaltot[ianterior][1]>valor):
+            valor=matrizvaltot[ianterior][1]
+            i2=0           
           return valor             
 def main():                                                                             
     a=input("Digite a quantidade de elementos")
