@@ -5,9 +5,9 @@ def retornalista(posicaomenor, pesoinicial):
     pesomenorlista.append(pesoinicial)
     return pesomenorlista         
 def encontramenorpeso(A):
-    pesoinicial=A[0][2]
+    pesoinicial=100
     posicao=0
-    posicaomenorpeso=0    
+    posicaomenorpeso=0# chutado um peso esdruxulo de alto    
     for i in A:
        if(i[2]<pesoinicial):
          pesoinicial=i[2]
@@ -35,7 +35,7 @@ def encontramaiorvalor(A):
 def eliminaelemento(A,i):
     b=[]
     for i2 in A:
-     if(i2!=A[i]):
+     if(i2!=i):
        b.append(i2)           
     return b 
 def selecionatamanho( A,i2):
@@ -50,11 +50,28 @@ def retornamaior( i , i2,A):
     if(A[i][1]>A[i2][1]):
       return A[i][1]
     else:
-      return A[i2][1]               
+      return A[i2][1]   
+def setacampovalor(pesomenorlista, i2,i,matrizvaltot,matrizresultado,valor):
+          valor=0
+          if(i==0 or i2==0):
+            valor=0
+          if(pesomenorlista[0][1]<=i2 and i==1):
+            valor=valor+matrizresultado[pesomenorlista[0][0]][1]     
+          else:      
+            if(i2==pesomenorlista[0][1]):
+              valor=valor+matrizresultado[pesomenorlista[0][0]][1] 
+            elif(i2==pesomenorlista[0][1]):
+              print(pesomenorlista[1][0])
+              if(i2==pesomenorlista[1][1]):
+                 valor=valor+retornamior(pesomenorlista[0][0],pesomenorlista[1][0])                  
+            elif(len(pesomenorlista)>=2):   
+                if(i2>pesomenorlista[0][1] and i2<pesomenorlista[1][1]):
+                    valor=valor+matrizresultado[pesomenorlista[0][0]][1]  
+          return valor             
 def main():                                                                             
     a=input("Digite a quantidade de elementos")
     A=[]
-    colunas=int(a)
+    colunas=int(a)+1
     c=input("Digite a capacidade da mochila")
     d=int(c)      
     for i in range(colunas):
@@ -67,30 +84,15 @@ def main():
     print(A) 
     matrizvaltot=[]
     matrizresultado=[] 
-    for i in range(colunas+1):
+    for i in range(colunas):
       matrizvaltot.append([0]*(d+1))  
       pesomenorlista=[]
       matrizresultado=selecionatamanho(A,i)
-      print(matrizresultado)
       for i2 in range(d+1):
-          if(i==0 or i2==0):
-            matrizvaltot[i][i2]=0
-          if(len(pesomenorlista)==0):
-              pesomenorlista.append(encontramenorpeso(matrizresultado))
-              matrizrestante=eliminaelemento(A,pesomenorlista[0][0])    
-              pesomenorlista.append(encontramenorpeso(matrizrestante))
-              print(" este e o o segundo menor peso :",pesomenorlista[1][1])     
-          if(pesomenorlista[0][1]<=i2 and i==1):
-             matrizvaltot[i][i2]=matrizvaltot[i][i2]=A[pesomenorlista[0][0]][1]     
-          else:      
-            if(i2==pesomenorlista[0][1]):
-              matrizvaltot[i][i2]=A[pesomenorlista[0][0]][1] 
-            elif(i2==pesomenorlista[0][1]):
-              print(pesomenorlista[1][0])
-              if(i2==pesomenorlista[1][1]):
-                 matrizvaltot[i][i2]=retornamior(pesomenorlista[0][0],pesomenorlista[1][0])                  
-            elif(len(pesomenorlista)>=2):   
-                if(i2>pesomenorlista[0][1] and i2<pesomenorlista[1][1]):
-                    matrizvaltot[i][i2]=A[pesomenorlista[0][0]][1]
-    print(matrizvaltot)            
+          pesomenorlista.append(encontramenorpeso(matrizresultado))
+          matrizrestante=eliminaelemento(matrizresultado,matrizresultado[pesomenorlista[0][0]])          
+          pesomenorlista.append(encontramenorpeso(matrizrestante))      
+          matrizvaltot[i][i2]=setacampovalor(pesomenorlista,i2,i,matrizvaltot,matrizresultado,0)  
+          print(" este e o primeiro elemento da lista:",pesomenorlista[0][0])  
+    print(matrizvaltot)          
 main()
