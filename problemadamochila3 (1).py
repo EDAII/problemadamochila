@@ -47,26 +47,36 @@ def selecionatamanho( A,i2):
       posicao=posicao+1
     return b 
 def retornamaior( i , i2,A):
-    if(A[i][1]>A[i2][1]):
-      return A[i][1]
-    else:
-      return A[i2][1]   
+   result=[] 
+   if(A[i][1]>A[i2][1]):
+      result.append(A[i][1])
+      result.append(i2-A[i][2])  
+   else:
+      result.append(A[i2][1]) 
+      result.append(i2-A[i2][2])
+   return result          
 def setacampovalor(pesomenorlista, i2,i,matrizvaltot,matrizresultado,valor):
           valor=0
           if(i==0 or i2==0):
             valor=0
           if(pesomenorlista[0][1]<=i2 and i==1):
-            valor=valor+matrizresultado[pesomenorlista[0][0]][1]     
+            valor=valor+matrizresultado[pesomenorlista[0][0]][1]
+            i2=i2-pesomenorlista[0][1]        
           else:      
             if(i2==pesomenorlista[0][1]):
-              valor=valor+matrizresultado[pesomenorlista[0][0]][1] 
+              valor=valor+matrizresultado[pesomenorlista[0][0]][1]
+              i2=i2-pesomenorlista[0][1]   
             elif(i2==pesomenorlista[0][1]):
               print(pesomenorlista[1][0])
               if(i2==pesomenorlista[1][1]):
-                 valor=valor+retornamior(pesomenorlista[0][0],pesomenorlista[1][0])                  
+                 valorlista=[]  
+                 valorlista=retornamaior(pesomenorlista[0][0],pesomenorlista[1][0])
+                 valor=valorlista[0]
+                 i2=valorlista[1]                    
             elif(len(pesomenorlista)>=2):   
                 if(i2>pesomenorlista[0][1] and i2<pesomenorlista[1][1]):
-                    valor=valor+matrizresultado[pesomenorlista[0][0]][1]  
+                    valor=valor+matrizresultado[pesomenorlista[0][0]][1]
+          print (" estes são os novos valores de i2 e de valor :" ,i2,valor)     
           return valor             
 def main():                                                                             
     a=input("Digite a quantidade de elementos")
