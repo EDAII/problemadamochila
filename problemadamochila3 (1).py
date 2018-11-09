@@ -59,6 +59,8 @@ def setacampovalor(pesomenorlista, i2,i,matrizvaltot,matrizresultado,valor):
           valor=0
           if(i==0 or i2==0):
             valor=0
+          if(i2<pesomenorlista[0][1]):
+             valor=0   
           if(pesomenorlista[0][1]<=i2 and i==1):
             valor=valor+matrizresultado[pesomenorlista[0][0]][1]
             i2=i2-pesomenorlista[0][1]        
@@ -76,7 +78,13 @@ def setacampovalor(pesomenorlista, i2,i,matrizvaltot,matrizresultado,valor):
             elif(len(pesomenorlista)>=2):   
                 if(i2>pesomenorlista[0][1] and i2<pesomenorlista[1][1]):
                     valor=valor+matrizresultado[pesomenorlista[0][0]][1]
-          print (" estes são os novos valores de i2 e de valor :" ,i2,valor)     
+            elif(A[i][2]<=i2):
+                 i2=i2-matrizresultado[i][2]
+                 matrizresult=eliminaelemento(matrizresult,matrizresult[i])   
+                 valor=valor+A[i][1]+setacampovalor(pesomenorlista, i2,i,matrizvaltot,matrizresultado,0)
+                 if(matrizvaltot[i-1][1]>valor):
+                   valor=matrizvaltot[i-1][1]
+                   i2=0   
           return valor             
 def main():                                                                             
     a=input("Digite a quantidade de elementos")
@@ -102,7 +110,6 @@ def main():
           pesomenorlista.append(encontramenorpeso(matrizresultado))
           matrizrestante=eliminaelemento(matrizresultado,matrizresultado[pesomenorlista[0][0]])          
           pesomenorlista.append(encontramenorpeso(matrizrestante))      
-          matrizvaltot[i][i2]=setacampovalor(pesomenorlista,i2,i,matrizvaltot,matrizresultado,0)  
-          print(" este e o primeiro elemento da lista:",pesomenorlista[0][0])  
+          matrizvaltot[i][i2]=setacampovalor(pesomenorlista,i2,i,matrizvaltot,matrizresultado,0)    
     print(matrizvaltot)          
 main()
