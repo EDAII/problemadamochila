@@ -5,9 +5,9 @@ def retornalista(posicaomenor, pesoinicial):
     pesomenorlista.append(pesoinicial)
     return pesomenorlista         
 def encontramenorpeso(A):
-    pesoinicial=100
+    pesoinicial=100# chutado um peso esdruxulo de alto    
     posicao=0
-    posicaomenorpeso=0# chutado um peso esdruxulo de alto    
+    posicaomenorpeso=0
     for i in A:
        if(i[2]<pesoinicial):
          pesoinicial=i[2]
@@ -57,44 +57,52 @@ def retornamaior(pesomenor,A):
       result.append(A[i2][1]) 
       result.append(i2-A[i2][2])
    return result          
-def setacampovalor(pesomenorlista, i2,i,matrizvaltot,matrizresultado,valor,elemento,valor4):
-          valor=0
-          i3=pesomenorlista[0][0]     
+def setacampovalor(pesomenorlista,i,matrizvaltot,matrizresultado,elemento,valor4,resultado,i2):
+          valor=0    
           ianterior=i-1 
           pesomenor=[]   
           pesomenor.append(pesomenorlista[0][0])
-          pesomenor.append(pesomenorlista[1][0])    
+          pesomenor.append(pesomenorlista[1][0])
+          valorlista=[]
+          usada=[]   
+          i2=resultado[0]         
           if(i==0 or i2==0):
-            return 0
+            resultado.append(0)
+            resultado.append(0)
+            return resultado 
           if(i2<pesomenorlista[0][1]):
-             return 0   
+             valorlista.append(0)
+             usada.append(0)        
           if(pesomenorlista[0][1]<=i2 and i==1):
-            valor=valor+matrizresultado[pesomenorlista[0][0]][1]
-            i2=i2-pesomenorlista[0][1]        
-          else:      
-            if(i2==pesomenorlista[0][1]):  
-              valor=valor4
-              i2=i2-pesomenorlista[0][1]  
-            elif(i2>pesomenorlista[0][1] and i2<pesomenorlista[1][1]):
-              valorintermediario=retornamaior(pesomenor,matrizresultado)
-              i2=i2-valorintermediario[1]
-              valor=valor+valorintermediario[0]         
-            if(i2==pesomenorlista[1][1]):
-               valorlista=[]  
-               valorlista=retornamaior(pesomenor,matrizresultado)
-               valor=valorlista[0]
-               i2=valorlista[1]
-            elif(elemento[2]<=i2):
-                 i2=i2-elemento[2]
+            resultado.append(matrizresultado[pesomenor[0]][1])
+            resultado.append(pesomenorlista[0][1])
+            return resultado                               
+          if(i2>=pesomenorlista[0][1]):
+              i5=pesomenor[0] - 1   
+              valor12=matrizresultado[i5][1]   
+              valorlista.append(valor12)
+              usada.append(pesomenorlista[0][1])      
+          if(i2>=pesomenorlista[1][1]):
+              valor11=matrizresultado[pesomenor[1]][1] 
+              valorlista.append(valor11)
+              usada.append(pesomenorlista[1][1])     
+          if(elemento[2]<=i2):
+                 usada.append(elemento[2]) 
+                 resultado[0]=resultado[0]-elemento[2]       
                  valor3=elemento[1]  
                  matrizresultado=eliminaelemento(matrizresultado,elemento)   
-                 valor2=setacampovalor(pesomenorlista, i2,i,matrizvaltot,matrizresultado,0,elemento,valor4)   
-                 valor=valor+valor3+valor2  
-                 print(" este é o valor do setacampo :", valor2)                      
-          if(matrizvaltot[ianterior][1]>valor):
-            valor=matrizvaltot[ianterior][1]
-            i2=0           
-          return valor             
+                 valorlista.append(setacampovalor(pesomenorlista,i,matrizvaltot,matrizresultado,elemento,valor4, resultado,i2)[1])        
+          valorlista.append(matrizvaltot[ianterior][i2])   
+          valor=valorlista[0]
+          posicao=0
+          for valort in valorlista:   
+               if(valort>valor):     
+                 valor=valort   
+          posicao=posicao+1 
+          usada.append(resultado[0])     
+          resultado[0]=resultado[0]-usada[posicao]  
+          resultado[1]=resultado[1]+valor                                              
+          return resultado             
 def main():                                                                             
     a=input("Digite a quantidade de elementos")
     A=[]
@@ -120,7 +128,12 @@ def main():
           pesomenorlista.append(encontramenorpeso(matrizresultado))
           matrizrestante=eliminaelemento(matrizresultado,matrizresultado[pesomenorlista[0][0]])          
           pesomenorlista.append(encontramenorpeso(matrizrestante))      
-          i3=pesomenorlista[0][0]       
-          matrizvaltot[i][i2]=setacampovalor(pesomenorlista,i2,i,matrizvaltot,matrizresultado,0,matrizresultado[i],matrizresultado[i3][1])       
+          i3=pesomenorlista[0][0]
+          resultado=[]
+          resultado2=[]      
+          resultado.append(i2)
+          resultado.append(0)                 
+          resultado2=setacampovalor(pesomenorlista,i,matrizvaltot,matrizresultado,matrizresultado[i],matrizresultado[i3][1], resultado,i2)   
+          matrizvaltot[i][i2]=resultado2[1]        
     print(matrizvaltot)          
 main()
